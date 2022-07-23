@@ -1,0 +1,169 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.ibm.mj</groupId>
+	<packaging>jar</packaging>
+
+	<name>CoreP8-MJ</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+	<dependencies>
+	
+	<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.6</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>mj.document</groupId>
+            <artifactId>PdfAndWord</artifactId>
+            <version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.sling</groupId>
+			<artifactId>org.apache.sling.commons.json</artifactId>
+			<version>2.0.4-incubator</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>2.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.javaparser</groupId>
+			<artifactId>javaparser-core</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>FileNet</groupId>
+			<artifactId>client-download</artifactId>
+			<version>5.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>FileNet</groupId>
+			<artifactId>pe</artifactId>
+			<version>5.5</version>
+		</dependency>
+		<dependency>
+			<groupId>FileNet</groupId>
+			<artifactId>Jace</artifactId>
+			<version>5.5</version>
+		</dependency>
+		<dependency>
+			<groupId>FileNet</groupId>
+			<artifactId>xlxpscanner</artifactId>
+			<version>5.5</version>
+		</dependency>
+		<dependency>
+			<groupId>FileNet</groupId>
+			<artifactId>xlxpScannerUtils</artifactId>
+			<version>5.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>jdom</groupId>
+			<artifactId>jdom</artifactId>
+			<version>1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>in.jlibs</groupId>
+			<artifactId>jlibs-xml</artifactId>
+			<version>2.1</version>
+		</dependency>
+
+		<!-- All the libs for CaseManager -->
+		<dependency>
+			<groupId>IBMCaseManager</groupId>
+			<artifactId>icmoperations.jar</artifactId>
+			<version>5.5</version>
+		</dependency>
+		<!-- All the libs for Merging Report -->
+
+		<!-- All the commons libs -->
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
+
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/alternateLocation</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<!-- <plugins> <plugin> <inherited>true</inherited> <groupId>org.apache.maven.plugins</groupId> 
+			<artifactId>maven-deploy-plugin</artifactId> <configuration> <updateReleaseInfo>true</updateReleaseInfo> 
+			</configuration> </plugin> </plugins> -->
+		<finalName>CoreP8</finalName>
+	</build>
+	<artifactId>CoreP8-MJ</artifactId>
+	<organization>
+		<name>IBM - BeNeLux - Malek Jabri</name>
+	</organization>
+	<description>My core element for all my other Package.
+This package will allow to use all the basic thinks such as :
+		- Connection to repository
+		- File manipulation
+		- Folder Manipulation
+		- Properties file Manipulation
+              - Add advanced folder creation
+		- Role Manipulation
+		- and even more ..
+
+- Fix 4.2.5 Clean and add correction for null and Array empty.
+- Fix 4.2.6 Add Abstract Tester Class and Tester Inteface.
+This is based on the FileNet 5.5 Librairies
+- Add Coumpteur capability
+- Add Taget Group membership 
+- Add logger Capability
+- Add Role SearchTool capaibility
+- Add EventHandler &amp; Counter 
+- Fix Copy Document and provide link possibility
+- Creation of Counter
+
+	Enjoy it
+	Malek Jabri</description>
+	<version>5.1.3</version>
+</project>

@@ -1,0 +1,191 @@
+<ArrayOfExposedFieldDefinition>
+<ExposedFieldDefinition
+					Name="F_WobNum"
+					Type="string"
+					Length="32"
+					SourceName="ECM_Operations"
+					SourceType="2"
+					IsSystemField="true"
+					IsMandatorySystemField="true"
+/>
+				<ExposedFieldDefinition
+					Name="F_WorkSpaceId"
+					Type="int"
+					Length="0"
+					SourceName="ECM_Operations"
+					SourceType="2"
+					IsSystemField="true"
+					IsMandatorySystemField="true"
+/>
+				<ExposedFieldDefinition
+					Name="F_Locked"
+					Type="int"
+					Length="0"
+					SourceName="ECM_Operations"
+					SourceType="2"
+					IsSystemField="true"
+					IsMandatorySystemField="true"
+/>
+				<ExposedFieldDefinition
+					Name="F_LockMachine"
+					Type="int"
+					Length="0"
+					SourceName="ECM_Operations"
+					SourceType="2"
+					IsSystemField="true"
+					IsMandatorySystemField="true"
+/>
+				<ExposedFieldDefinition
+					Name="F_LockUser"
+					Type="int"
+					Length="0"
+					SourceName="ECM_Operations"
+					SourceType="2"
+					IsSystemField="true"
+					IsMandatorySystemField="true"
+/>
+				<ExposedFieldDefinition
+					Name="F_LockTime"
+					Type="time"
+					Length="0"
+					SourceName="ECM_Operations"
+					SourceType="2"
+					IsSystemField="true"
+					IsMandatorySystemField="true"
+/>
+				<ExposedFieldDefinition
+					Name="F_BindPending"
+					Type="int"
+					Length="0"
+					SourceName="ECM_Operations"
+					SourceType="2"
+					IsSystemField="true"
+					IsMandatorySystemField="true"
+/>
+				<ExposedFieldDefinition
+					Name="F_BoundUser"
+					Type="int"
+					Length="0"
+					SourceName="ECM_Operations"
+					SourceType="2"
+					IsSystemField="true"
+					IsMandatorySystemField="true"
+/>
+				<ExposedFieldDefinition
+					Name="F_BoundMachine"
+					Type="int"
+					Length="0"
+					SourceName="ECM_Operations"
+					SourceType="2"
+					IsSystemField="true"
+					IsMandatorySystemField="true"
+/>
+				<ExposedFieldDefinition
+					Name="F_Tag"
+					Type="string"
+					Length="128"
+					SourceName="ECM_Operations"
+					SourceType="2"
+					IsSystemField="true"
+					IsMandatorySystemField="true"
+/>
+				<ExposedFieldDefinition
+					Name="F_OperationId"
+					Type="int"
+					Length="0"
+					SourceName="ECM_Operations"
+					SourceType="2"
+					IsSystemField="true"
+					IsMandatorySystemField="true"
+/>
+				<ExposedFieldDefinition
+					Name="F_WorkClassId"
+					Type="int"
+					Length="0"
+					SourceName="ECM_Operations"
+					SourceType="2"
+					IsSystemField="true"
+					IsMandatorySystemField="true"
+/>
+				<ExposedFieldDefinition
+					Name="F_QueueWPClassId"
+					Type="int"
+					Length="0"
+					SourceName="ECM_Operations"
+					SourceType="2"
+					IsSystemField="true"
+					IsMandatorySystemField="true"
+/>
+				<ExposedFieldDefinition
+					Name="F_EnqueueTime"
+					Type="time"
+					Length="0"
+					SourceName="ECM_Operations"
+					SourceType="2"
+					IsSystemField="true"
+					IsMandatorySystemField="true"
+/>
+				<ExposedFieldDefinition
+					Name="F_CreateTime"
+					Type="time"
+					Length="0"
+					SourceName="ECM_Operations"
+					SourceType="2"
+					IsSystemField="true"
+					IsMandatorySystemField="true"
+/>
+				<ExposedFieldDefinition
+					Name="F_InstrSheetId"
+					Type="int"
+					Length="0"
+					SourceName="ECM_Operations"
+					SourceType="2"
+					IsSystemField="true"
+					IsMandatorySystemField="true"
+/>
+				<ExposedFieldDefinition
+					Name="F_WorkOrderId"
+					Type="int"
+					Length="0"
+					SourceName="ECM_Operations"
+					SourceType="2"
+					IsSystemField="true"
+					IsMandatorySystemField="true"
+/>
+				<ExposedFieldDefinition
+					Name="F_SortOrder"
+					Type="string"
+					Length="230"
+					SourceName="ECM_Operations"
+					SourceType="2"
+					IsSystemField="true"
+					IsMandatorySystemField="true"
+/>
+				<ExposedFieldDefinition
+					Name="F_Overdue"
+					Type="int"
+					Length="0"
+					SourceName="ECM_Operations"
+					SourceType="2"
+					IsSystemField="true"
+					IsMandatorySystemField="false"
+/>
+				<ExposedFieldDefinition
+					Name="F_Subject"
+					Type="string"
+					Length="80"
+					SourceName="ECM_Operations"
+					SourceType="2"
+					IsSystemField="true"
+					IsMandatorySystemField="false"
+/>
+				<ExposedFieldDefinition
+					Name="F_TimeOut"
+					Type="time"
+					Length="0"
+					SourceName="ECM_Operations"
+					SourceType="2"
+					IsSystemField="true"
+					IsMandatorySystemField="false"
+/>
+</ArrayOfExposedFieldDefinition>

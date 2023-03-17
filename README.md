@@ -5,42 +5,42 @@ This package can be used as example and contains a lot of feature including the 
 
  - Connection to repository
  - DocumentTool 
-      copyDocument
-      getMimeType
-      createCoumpountDocWithContent
-      createCoumpountDoc
-      linkSubCompoundDoc
-      LinkDocToFolder
-      createDocByBatch
-      createDocWithContent
-      importDoc (FileSsytem)
-      createDocNoContent
-      fetchDocByPath
-      fetchDocById
-      fetchDocById
-      checkinDoc
-      markCurrentVerison
-      checkinDocwithSameContent
-      checkinDoc
-      checkinModule
-      getDocument
+   * copyDocument
+   * getMimeType
+   * createCoumpountDocWithContent
+   * createCoumpountDoc
+   * linkSubCompoundDoc
+   * LinkDocToFolder
+   * createDocByBatch
+   * createDocWithContent
+   * importDoc (FileSsytem)
+   * createDocNoContent
+   * fetchDocByPath
+   * fetchDocById
+   * fetchDocById
+   * checkinDoc
+   * markCurrentVerison
+   * checkinDocwithSameContent
+   * checkinDoc
+   * checkinModule
+   * getDocument
  - Folder Manipulation
-    createFolder
-    createFolderAndRetriveIt
-    createCaseFolderAndRetriveIt
-    importFolder ( --> Import a folder structure in Filenet )
-    LinkFolderToFolder
-    LinkFolderToFolder2
-    importCaseSubFolder
-    importCaseSubCompoundFolder
-    unzipallDossier
-    unzipallDossier
-    unZipFolder
-    getFolderbyID
-    getFolderbyID
-    getFolderbyPath
-    getFolder
-    parseSubfolderPath
+   * createFolder
+   * createFolderAndRetriveIt
+   * createCaseFolderAndRetriveIt
+   * importFolder ( --> Import a folder structure in Filenet )
+   * LinkFolderToFolder
+   * LinkFolderToFolder2
+   * importCaseSubFolder
+   * importCaseSubCompoundFolder
+   * unzipallDossier
+   * unzipallDossier
+   * unZipFolder
+   * getFolderbyID
+   * getFolderbyID
+   * getFolderbyPath
+   * getFolder
+   * parseSubfolderPath
  - SearchTool
       Search Documents
       Search Folders

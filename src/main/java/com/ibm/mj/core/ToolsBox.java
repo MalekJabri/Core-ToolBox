@@ -1,19 +1,11 @@
 package com.ibm.mj.core;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.util.logging.Logger;
-
 import com.filenet.api.collection.DocumentSet;
 import com.filenet.api.collection.FolderSet;
 import com.filenet.api.collection.IndependentObjectSet;
 import com.filenet.api.constants.RefreshMode;
-import com.filenet.api.core.CustomObject;
-import com.filenet.api.core.Document;
-import com.filenet.api.core.Factory;
-import com.filenet.api.core.Folder;
-import com.filenet.api.core.ObjectStore;
+import com.filenet.api.core.*;
+import com.filenet.api.events.ObjectChangeEvent;
 import com.filenet.api.exception.EngineRuntimeException;
 import com.filenet.api.property.FilterElement;
 import com.filenet.api.property.Properties;
@@ -28,6 +20,11 @@ import com.ibm.casemgmt.api.constants.ModificationIntent;
 import com.ibm.mj.core.ceObject.CustomObjectTool;
 import com.ibm.mj.core.ceObject.FolderTool;
 import com.ibm.mj.core.model.CounterDetails;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.util.logging.Logger;
 
 public class ToolsBox {
 	
@@ -45,18 +42,12 @@ public class ToolsBox {
 	{
 
 		SearchScope search = new SearchScope(os);
-
 		SearchSQL sql = new SearchSQL();
-
 		sql.setSelectList("*");
-
 		sql.setFromClauseInitialValue(DocumentClass, "d", true);
-
 		sql.setWhereClause(properties+ "="+"'"+value+"'");
-
 		DocumentSet documents = (DocumentSet)search.fetchObjects(sql,
 				Integer.valueOf(50),null, Boolean.valueOf(true));
-
 		return documents;
 	}
 	
@@ -221,5 +212,84 @@ public class ToolsBox {
 		}
 		if(compt>=0) details.setNext(compt);
 		return details;
+	}
+
+	public static int getNext(ObjectChangeEvent event, Id subId ) {
+		int currentCount = 0;
+		String parameter ;
+		ObjectStore os = event.getObjectStore();
+		Document doc = Factory.Document.fetchInstance(os, subId, null);
+		String className = doc.getClassName() ;
+		System.out.println();
+		CustomObject dispenser = null;
+		FilterElement counterProperty1 =	new FilterElement(null,null,null,CounterDetails.COUNTER_PREFIX,null);
+		FilterElement counterProperty2 =	new FilterElement(null,null,null,CounterDetails.COUNTER_ATTRIBUTE_TARGET,null);
+		FilterElement counterProperty3 =	new FilterElement(null,null,null,CounterDetails.COUNTER_NEXT_ID_ATTRIBUTE,null);
+		PropertyFilter propertyFilter =  new PropertyFilter();
+		propertyFilter.addIncludeProperty(counterProperty1);
+		propertyFilter.addIncludeProperty(counterProperty2);
+		propertyFilter.addIncludeProperty(counterProperty3);
+
+		int compt = -1;
+		try {
+			dispenser = Factory.CustomObject.fetchInstance(os, "/config/"+className, propertyFilter);
+		}catch (EngineRuntimeException e) {
+			logger.warning("Counter is not found for the class "+className);
+		}
+		if(dispenser==null) {
+			logger.warning("Create new counter for the class "+className);
+			Folder folder = FolderTool.getFolderbyPath(os, "/config");
+			dispenser = Factory.CustomObject.createInstance(os,CounterDetails.COUNTER_CLASS);
+			Properties dispenserProperties = dispenser.getProperties();
+			dispenserProperties.putValue(CounterDetails.COUNTER_NAME, className);
+			dispenserProperties.putValue(CounterDetails.COUNTER_NEXT_ID_ATTRIBUTE, 0);
+			dispenser.save(RefreshMode.REFRESH);
+			CustomObjectTool.LinkToFolder(os, folder, dispenser);
+			compt=-1;
+			logger.info("New counter saved and linked to Config directory for the class "+className);
+		}else {
+			for(int i =0;i<50;i++) {
+				logger.info("Counter Exist for the class: "+className);
+				try {
+					if(dispenser.isLocked()) {
+						logger.info("Counter is locked by another process for the class: "+className);
+						dispenser= Factory.CustomObject.fetchInstance(os, "/config/"+className, propertyFilter);
+					}
+					else{
+						logger.severe("Counter is locked for the class: "+className);
+						dispenser.lock(10, null);
+						dispenser.save(RefreshMode.REFRESH);
+						dispenser.fetchProperties(propertyFilter);
+						Properties dispenserProperties = dispenser.getProperties();
+						try {
+							compt  = dispenserProperties.getInteger32Value(CounterDetails.COUNTER_NEXT_ID_ATTRIBUTE);
+						}catch(Exception e ) {
+							System.out.println("the id is null set 0");
+
+						}
+						compt++;
+						dispenserProperties.putValue(CounterDetails.COUNTER_NEXT_ID_ATTRIBUTE,compt);
+						logger.info("Counter is update to the value "+compt+" for the class: "+className);
+						dispenser.unlock();
+						//details.setAttributeName(dispenserProperties.getStringValue(CounterDetails.COUNTER_ATTRIBUTE_TARGET));
+						//details.setPrefix(dispenserProperties.getStringValue(CounterDetails.COUNTER_PREFIX));
+						dispenser.save(RefreshMode.NO_REFRESH);
+						break;
+					}
+
+				}catch (EngineRuntimeException e ) {
+					try {
+						dispenser = Factory.CustomObject.fetchInstance(os, "/config/"+className, null);
+						Thread.sleep(5);
+						logger.warning("Counter failed due to another process: "+className+ " -- Loop-- "+i);
+						logger.info(e.getMessage());
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		}
+		//if(compt>=0) details.setNext(compt);
+		return 0;
 	}
 }

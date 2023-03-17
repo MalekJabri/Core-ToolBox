@@ -1,18 +1,16 @@
 package com.ibm.mj.core.p8Connection;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import javax.security.auth.Subject;
-
-import org.apache.log4j.Logger;
-
 import com.filenet.api.core.Connection;
 import com.filenet.api.core.Domain;
 import com.filenet.api.core.Factory;
 import com.filenet.api.core.ObjectStore;
 import com.filenet.api.util.UserContext;
+import org.apache.log4j.Logger;
+
+import javax.security.auth.Subject;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Connections {
 	
@@ -42,22 +40,19 @@ public class Connections {
 	public void connection(String user, String pass, String objectstore){
 		
 		
-		      log.info("Inside GeneratePDF \n");
+
 		      System.setProperty("java.security.auth.login.config", m_jaasconf);
-		      log.info("Inside GeneratePDF--1 \n");
+
 		      Connection c = getConnection();
 		      Subject sub = UserContext.createSubject((com.filenet.api.core.Connection) c, m_username, m_password, 
 		        m_jaasstanza);
-		      log.info("Inside GeneratePDF--2 \n");
 		      UserContext uc = new UserContext();
 		      uc.pushSubject(sub);
 		      UserContext.set(uc);
-		      log.info("Inside GeneratePDF--3 \n");
 		      Domain domain = Factory.Domain.fetchInstance(c, m_domain, null);
-		      log.info("Inside GeneratePDF--4 \n");
-		      ObjectStore os = 
+		      ObjectStore os =
 		        Factory.ObjectStore.fetchInstance(domain, m_osName, null);
-		      log.info("Inside GeneratePDF--5 \n");
+		      log.info("Connec :--5 \n");
 		      if (os != null) {
 		        log.info("Object store found:" + 
 		          os.get_DisplayName() + "\n");
@@ -66,7 +61,7 @@ public class Connections {
 		      } else {
 		        log.info("Object store not found \n");
 		      }
-		      log.info("Inside GeneratePDF--6 \n");
+		      log.info("Connec :--6 \n");
 		      
 		      
 		

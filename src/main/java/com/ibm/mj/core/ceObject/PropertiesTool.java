@@ -1,22 +1,20 @@
 package com.ibm.mj.core.ceObject;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-
 import com.filenet.api.collection.DateTimeList;
 import com.filenet.api.collection.IdList;
 import com.filenet.api.collection.Integer32List;
 import com.filenet.api.collection.StringList;
+import com.filenet.api.property.FilterElement;
 import com.filenet.api.property.Properties;
 import com.filenet.api.property.Property;
+import com.filenet.api.property.PropertyFilter;
 import com.filenet.api.util.Id;
 import com.filenet.apiimpl.collection.DateTimeListImpl;
 import com.filenet.apiimpl.collection.Integer32ListImpl;
 import com.filenet.apiimpl.collection.StringListImpl;
+
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class PropertiesTool {
 
@@ -24,6 +22,7 @@ public class PropertiesTool {
 
 	@SuppressWarnings("unchecked")
 	public PropertiesTool(Properties properties,String filtre) {
+
 		tableOFValue=new HashMap<String,String>();	
 		Iterator<Property> it = properties.iterator();	
 		while (it.hasNext()){
@@ -95,7 +94,7 @@ public class PropertiesTool {
 	
 
 	public static String getPropertyValue(Property field,String DateFormat){
-		if(DateFormat ==null || DateFormat.isEmpty()) DateFormat = "dd-mm-yyyy";
+		if(DateFormat ==null || DateFormat.isEmpty()) DateFormat = "dd-MM-yyyy";
 		SimpleDateFormat format = 
 				new SimpleDateFormat(DateFormat);
 		String result =null;
@@ -143,9 +142,19 @@ public class PropertiesTool {
 		if(field!=null && field.length()>0){
 			result= tableOFValue.get(field);
 		}
-
-
 		return result;
+	}
 
+	public static PropertyFilter getPropertyFilter(List<String>  properties, boolean include) {
+		PropertyFilter propFilter = new PropertyFilter();
+		if(properties!=null)
+		for(String property :properties){
+			if(include) {
+				propFilter.addIncludeProperty(new FilterElement(0,null,null,property,null));
+			}else {
+				propFilter.addExcludeProperty(property);
+			}
+		}
+		return propFilter;
 	}
 }

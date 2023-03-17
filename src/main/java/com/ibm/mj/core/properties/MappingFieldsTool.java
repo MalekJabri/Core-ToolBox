@@ -20,19 +20,18 @@ public class MappingFieldsTool {
 	 * 
 	 * **/
 
-	public MappingFieldsTool(String Paramfile) {
+	public MappingFieldsTool(String paramfile) {
 		try {
-			System.out.println(Paramfile);
-			configFile = Paramfile;
+			logger.info("Loading information form the file "+ paramfile);
+			configFile = paramfile;
 			FileInputStream in = new FileInputStream(configFile);
 			Properties prop = new Properties();		
 			prop.load(in);
-			System.out.println(prop.getProperty("url"));
 			in.close();
 			extractInfo(prop);
 			prop=null;
 		}catch(Exception e){
-			System.out.println(e.getMessage());
+			logger.log(Level.SEVERE, e.getMessage(), e);
 		}	
 	}
 
@@ -43,7 +42,8 @@ public class MappingFieldsTool {
 			extractInfo(prop);	
 			prop=null;
 		}catch(Exception e){
-			System.out.println(e.getMessage());
+			logger.log(Level.SEVERE, e.getMessage(), e);
+
 		}	
 	}
 
@@ -55,7 +55,7 @@ public class MappingFieldsTool {
 			extractInfo(prop);
 
 		}catch(Exception e){
-			System.out.println(e.getMessage());
+			logger.log(Level.SEVERE, e.getMessage(), e);
 		}
 		finally {
 			in.close();
@@ -71,7 +71,6 @@ public class MappingFieldsTool {
 			String attri = (String) ite.nextElement();
 			if(!attri.startsWith("---"))			{
 				table.put(attri, prop.getProperty(attri));
-				System.out.println(attri +" -- "+ prop.getProperty(attri));
 			}
 		}
 	}
@@ -100,7 +99,7 @@ public class MappingFieldsTool {
 			Iterator<String> it = test.iterator();
 			while(it.hasNext()){
 				String name=  it.next();
-				System.out.println(name + " ---- " + p.table.get(name));
+
 			}
 		} catch (Exception e) {
 				logger.log(Level.SEVERE, "In The test an exception is occured", e);

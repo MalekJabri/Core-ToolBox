@@ -43,7 +43,7 @@ public class ParseJavaFile {
 		MethodVisitor methodvisitor = new MethodVisitor();
 		methodvisitor.init();
 		methodvisitor.visit(cu, arg);		
-		XmlOperations.generateXML(ope.getPath(),ope.getOperationsName(),methodvisitor.getmethods());
+		CustomOperationsImport.generateXML(ope.getPath(),ope.getOperationsName(),methodvisitor.getmethods());
 	}
 	
 	private static class MethodVisitor extends VoidVisitorAdapter<Void> {

@@ -1,39 +1,23 @@
 package com.ibm.mj.core.ceObject;
 
+import com.filenet.api.collection.ContentElementList;
+import com.filenet.api.collection.DependentObjectList;
+import com.filenet.api.collection.FolderSet;
+import com.filenet.api.collection.VersionableSet;
+import com.filenet.api.constants.*;
+import com.filenet.api.core.*;
+import com.filenet.api.exception.EngineRuntimeException;
+import com.filenet.api.property.Properties;
+import com.filenet.api.property.PropertyFilter;
+import com.filenet.api.util.Id;
+import com.ibm.mj.core.p8Connection.CEUtil;
+
 import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.filenet.api.collection.ContentElementList;
-import com.filenet.api.collection.DependentObjectList;
-import com.filenet.api.collection.FolderSet;
-import com.filenet.api.collection.VersionableSet;
-import com.filenet.api.constants.AutoUniqueName;
-import com.filenet.api.constants.CheckinType;
-import com.filenet.api.constants.ComponentRelationshipType;
-import com.filenet.api.constants.CompoundDocumentState;
-import com.filenet.api.constants.DefineSecurityParentage;
-import com.filenet.api.constants.RefreshMode;
-import com.filenet.api.constants.ReservationType;
-import com.filenet.api.core.ComponentRelationship;
-import com.filenet.api.core.ContentTransfer;
-import com.filenet.api.core.Document;
-import com.filenet.api.core.DynamicReferentialContainmentRelationship;
-import com.filenet.api.core.Factory;
-import com.filenet.api.core.Folder;
-import com.filenet.api.core.ObjectStore;
-import com.filenet.api.core.ReferentialContainmentRelationship;
-import com.filenet.api.core.UpdatingBatch;
-import com.filenet.api.core.VersionSeries;
-import com.filenet.api.core.Versionable;
-import com.filenet.api.exception.EngineRuntimeException;
-import com.filenet.api.property.Properties;
-import com.filenet.api.property.PropertyFilter;
-import com.filenet.api.util.Id;
-import com.ibm.mj.core.p8Connection.CEUtil;
 
 
 public class DocumentTool {
@@ -52,6 +36,13 @@ public class DocumentTool {
 	public static String MIMETYPE_HTML 			= "text/html";
 	public static String MIMETYPE_ZIP 			= "application/zip";
 	public static String MIMETYPE_JAR			= "application/java-archive";
+	public static String MIMETYPE_TIFF			= "image/tiff";
+	public static String MIMETYPE_JPG			= "image/jpeg";
+	public static String MIMETYPE_BMP			= "image/bmp";
+	public static String MIMETYPE_GIF			= "image/gif";
+	public static String MIMETYPE_PNG			= "image/png";
+	public static String MIMETYPE_EML			= "application/octet-stream";
+
 
 	public static Document copyDocument(ObjectStore os, Document  doc, String docName, boolean linkToFolder) {
 		Document copy = null;	
@@ -106,18 +97,25 @@ public class DocumentTool {
 		if(docname!=null && docname.length()>0 && docname.contains(".") ){
 			String extension = docname.substring(docname.lastIndexOf("."), docname.length());
 			if(extension.length()>0){
-				if(extension.compareToIgnoreCase(".doc")==0) 	result= MIMETYPE_WORD_DOC;
-				if(extension.compareToIgnoreCase(".docx")==0) 	result= MIMETYPE_WORD_DOCX;
-				if(extension.compareToIgnoreCase(".pdf")==0) 	result= MIMETYPE_PDF;
-				if(extension.compareToIgnoreCase(".xml")==0) 	result= MIMETYPE_XML;
-				if(extension.compareToIgnoreCase(".xls")==0) 	result= MIMETYPE_EXCEL_XLS;
-				if(extension.compareToIgnoreCase(".xlsx")==0) 	result= MIMETYPE_EXCEL_XLSX;
-				if(extension.compareToIgnoreCase(".ppt")==0) 	result= MIMETYPE_PPOINT_PPT;
-				if(extension.compareToIgnoreCase(".txt")==0) 	result= MIMETYPE_TXT;
-				if(extension.compareToIgnoreCase(".pptx")==0) 	result= MIMETYPE_PPOINT_PPTX;	
-				if(extension.compareToIgnoreCase(".html")==0) 	result= MIMETYPE_HTML;	
-				if(extension.compareToIgnoreCase(".zip")==0) 	result= MIMETYPE_ZIP;
-				if(extension.compareToIgnoreCase(".jar")==0) 	result= MIMETYPE_JAR;
+				if(extension.compareToIgnoreCase(".pptx")==0) return MIMETYPE_PPOINT_PPTX;
+				if(extension.compareToIgnoreCase(".docx")==0) return MIMETYPE_WORD_DOCX;
+				if(extension.compareToIgnoreCase(".doc")==0) 	return MIMETYPE_WORD_DOC;
+				if(extension.compareToIgnoreCase(".pdf")==0) 	return MIMETYPE_PDF;
+				if(extension.compareToIgnoreCase(".xml")==0) 	return MIMETYPE_XML;
+				if(extension.compareToIgnoreCase(".xlsx")==0) return MIMETYPE_EXCEL_XLSX;
+				if(extension.compareToIgnoreCase(".xls")==0) 	return  MIMETYPE_EXCEL_XLS;
+				if(extension.compareToIgnoreCase(".ppt")==0) 	return MIMETYPE_PPOINT_PPT;
+				if(extension.compareToIgnoreCase(".txt")==0) 	return MIMETYPE_TXT;
+				if(extension.compareToIgnoreCase(".html")==0) return MIMETYPE_HTML;
+				if(extension.compareToIgnoreCase(".zip")==0) 	return MIMETYPE_ZIP;
+				if(extension.compareToIgnoreCase(".jar")==0) return MIMETYPE_JAR;
+				if(extension.compareToIgnoreCase(".tiff")==0 || extension.compareToIgnoreCase(".tif")==0) return MIMETYPE_TIFF;
+				if(extension.compareToIgnoreCase(".jpg")==0 || extension.compareToIgnoreCase(".jpeg")==0) return MIMETYPE_JPG;
+				if(extension.compareToIgnoreCase(".bmp")==0) return MIMETYPE_BMP;
+				if(extension.compareToIgnoreCase(".gif")==0) return MIMETYPE_GIF;
+				if(extension.compareToIgnoreCase(".png")==0) return MIMETYPE_PNG;
+				if(extension.compareToIgnoreCase(".eml")==0) return MIMETYPE_EML;
+				if(extension.compareToIgnoreCase(".msg")==0) return MIMETYPE_MSG;
 			}			
 		}		
 		return result;
@@ -297,9 +295,12 @@ public class DocumentTool {
 	{
 		return createDocWithContent( file,   os,  docName,  docClass,  folder, propertiesMap,  null);
 	}
-	
-	
-	public static Document importDoc(File file, ObjectStore os,String docName, String docClass,HashMap<String, String> propertiesMap,HashMap<String, Integer> propertiesIntMap) {
+
+	public static Document importDoc(File file, ObjectStore os,String docName, String docClass,HashMap<String, String> propertiesMap) {
+		return 	 importDoc(file,os,docName,docClass,propertiesMap,null);
+	}
+
+		public static Document importDoc(File file, ObjectStore os,String docName, String docClass,HashMap<String, String> propertiesMap,HashMap<String, Integer> propertiesIntMap) {
 		Document doc = null;
 		if (docClass==null || docClass.equals(""))
 			doc = Factory.Document.createInstance(os, null);

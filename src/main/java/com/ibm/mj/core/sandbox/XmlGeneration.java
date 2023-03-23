@@ -1,28 +1,30 @@
 package com.ibm.mj.core.sandbox;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+
+import jlibs.xml.sax.XMLDocument;
+import org.xml.sax.SAXException;
 
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.stream.StreamResult;
-
-import org.xml.sax.SAXException;
-
-import jlibs.xml.sax.XMLDocument;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 public class XmlGeneration {
 
 
 	public static void main(String[] args) throws Exception {
-		int i=0;
-		createMultidocs(1,"C:\\XmlFolder");
-		//if(i==0)createMultiwithfolderdocs(3, "C:\\watchFolder");
+		int nbrDocs=10;
+		createMultidocs(nbrDocs,"./XmlFolder/");
+	//	createMultiwithfolderdocs(nbrDocs, "./XmlFolder/");
 	}
 
 	
 
-	private static void createMultidocs(int number, String Path) throws FileNotFoundException,
+	private static void createMultidocs(int number, String path) throws FileNotFoundException,
 	TransformerConfigurationException, SAXException {
+		checkFolder(path);
 		for(int i=0;i<number;i++){
+			System.out.println("Create docs : "+i);
 			Attribute[] docAttributes = new Attribute[3] ;
 			docAttributes[0]=new Attribute("DocumentClass","Document");
 			docAttributes[1]=new Attribute("DocumentTitle","Contract "+i+".pdf");
@@ -31,7 +33,7 @@ public class XmlGeneration {
 
 			Document document = new Document(docAttributes,null);
 
-			FileOutputStream file = new FileOutputStream(Path+"\\document"+i+".xml");
+			FileOutputStream file = new FileOutputStream(path+"document"+i+".xml");
 			XMLDocument xml = new XMLDocument(new StreamResult(file), false, 4, null);
 			xml.startDocument();
 			{
@@ -64,8 +66,9 @@ public class XmlGeneration {
 	}
 
 
-	private static void createMultiwithfolderdocs(int number, String Path) throws FileNotFoundException,
+	private static void createMultiwithfolderdocs(int number, String path) throws FileNotFoundException,
 	TransformerConfigurationException, SAXException {
+		checkFolder(path);
 		for(int i=0;i<number;i++){
 
 			Attribute[] docAttributes = new Attribute[2] ;
@@ -80,7 +83,7 @@ public class XmlGeneration {
 
 			Document document = new Document(docAttributes,folders);
 
-			FileOutputStream file = new FileOutputStream(Path+"\\document"+i+".xml");
+			FileOutputStream file = new FileOutputStream(path+"document_fol_"+i+".xml");
 			XMLDocument xml = new XMLDocument(new StreamResult(file), false, 4, null);
 			xml.startDocument();
 			{
@@ -107,7 +110,12 @@ public class XmlGeneration {
 		}
 	}
 
-
+  private static void checkFolder(String path){
+	  File OutPutFolder= new File(path);
+	  if(!OutPutFolder.exists()) {
+		  OutPutFolder.mkdirs();
+	  }
+  }
 	public  static class Document{
 		Attribute attributes[];
 		Folder folders[];

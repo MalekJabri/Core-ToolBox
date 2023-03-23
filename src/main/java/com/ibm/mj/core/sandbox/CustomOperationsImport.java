@@ -1,26 +1,25 @@
 package com.ibm.mj.core.sandbox;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 
-import javax.xml.transform.stream.StreamResult;
-
+import com.ibm.mj.core.configOperations.MethodAttributes;
+import com.ibm.mj.core.configOperations.MethodInformation;
 import jlibs.xml.sax.XMLDocument;
-
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.xml.sax.SAXException;
 
-import com.ibm.mj.core.configOperations.MethodAttributes;
-import com.ibm.mj.core.configOperations.MethodInformation;
+import javax.xml.transform.stream.StreamResult;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
-public class XmlOperations {
+public class CustomOperationsImport {
 
-	
+	/* Create custom operation import tool.
+	* This meant to be use during the import of custom method*/
 
 	public static void main(String[] args) throws Exception {
 		

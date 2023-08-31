@@ -23,7 +23,7 @@ public class CustomOperationsImport {
 
 	public static void main(String[] args) throws Exception {
 		
-	//	importDocu(doc);
+//	importDocu(doc);
 	
 	}
 

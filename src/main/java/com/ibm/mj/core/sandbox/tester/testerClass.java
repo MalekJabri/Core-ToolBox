@@ -11,7 +11,7 @@ public abstract class testerClass implements testerInterface{
 	
 	private static Logger logger = Logger.getLogger(testerClass.class.getName());
 	
-	static String configFile = "/Users/jabrimalek/development/tools/FileNet_Config/baw/config.properties";
+	static String configFile = "/Users/jabrimalek/development/tools/FileNet_Config/config_cpe_demo10.properties";
 	static String idRole = "{ED6E7265-6E0D-CFC0-B81C-64DC1BB00001}";
 
  	protected ObjectStore os = null;

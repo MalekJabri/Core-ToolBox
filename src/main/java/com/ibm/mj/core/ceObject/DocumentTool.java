@@ -7,13 +7,16 @@ import com.filenet.api.collection.VersionableSet;
 import com.filenet.api.constants.*;
 import com.filenet.api.core.*;
 import com.filenet.api.exception.EngineRuntimeException;
+import com.filenet.api.property.FilterElement;
 import com.filenet.api.property.Properties;
 import com.filenet.api.property.PropertyFilter;
 import com.filenet.api.util.Id;
 import com.ibm.mj.core.p8Connection.CEUtil;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -429,6 +432,32 @@ public class DocumentTool {
 		//doc.getProperties().putValue("DocumentTitle", doc.get_Name());
 		doc.save(RefreshMode.REFRESH);
 
+	}
+
+	public static void downloadDocument(Document doc, File targetFile) {
+		// Get document and populate property cache.
+		PropertyFilter pf = new PropertyFilter();
+		pf.addIncludeProperty(new FilterElement(null, null, null, PropertyNames.CONTENT_SIZE, null) );
+		pf.addIncludeProperty(new FilterElement(null, null, null, PropertyNames.CONTENT_ELEMENTS, null) );
+		ContentElementList docContentList = doc.get_ContentElements();
+		Iterator iter = docContentList.iterator();
+		while (iter.hasNext() )
+		{
+			ContentTransfer ct = (ContentTransfer) iter.next();
+			InputStream stream = ct.accessContentStream();
+			try
+			{
+				java.nio.file.Files.copy(
+						stream,
+						targetFile.toPath(),
+						StandardCopyOption.REPLACE_EXISTING);
+				stream.close();
+			}
+			catch(IOException ioe)
+			{
+				ioe.printStackTrace();
+			}
+		}
 	}
 
 	public static String checkinDoc(Document doc, InputStream content, String docName, Boolean Major){

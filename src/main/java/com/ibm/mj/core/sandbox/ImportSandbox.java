@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class ImportSanbox  extends testerClass implements Runnable {
+public class ImportSandbox  extends testerClass implements Runnable {
 
     private static int maxNumber = 5;
     private static int maxThread = 1;
     private int code =0;
-    private static Logger logger = Logger.getLogger(ImportSanbox.class.toString());
-    ImportSanbox(String config, int threadID){
+    private static Logger logger = Logger.getLogger(ImportSandbox.class.toString());
+    ImportSandbox(String config, int threadID){
         setConfig(config);
         code = threadID;
     }
@@ -27,7 +27,7 @@ public class ImportSanbox  extends testerClass implements Runnable {
 
         long last_time = System.nanoTime();
         for(int i =0;i<maxThread;i++) {
-            Runnable importSanbox = new ImportSanbox("/Users/jabrimalek/development/tools/FileNet_Config/config_cpe_generali.properties", i);
+            Runnable importSanbox = new ImportSandbox("/Users/jabrimalek/development/tools/FileNet_Config/config_cpe_generali.properties", i);
             Thread tst = new Thread(importSanbox);
             tst.start();
         }
